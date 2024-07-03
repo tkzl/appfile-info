@@ -9,7 +9,6 @@ import (
 	"image"
 	"image/png"
 	"io"
-	"io/ioutil"
 	"log"
 	"os"
 	"path/filepath"
@@ -18,8 +17,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/follyxing/go-plist"
 	"github.com/andrianbdn/iospng"
+	"github.com/follyxing/go-plist"
 	"github.com/fullsailor/pkcs7"
 	"github.com/shogo82148/androidbinary"
 	"github.com/shogo82148/androidbinary/apk"
@@ -148,7 +147,7 @@ func parseAndroidManifest(xmlFile *zip.File) (*androidManifest, error) {
 	}
 	defer rc.Close()
 
-	buf, err := ioutil.ReadAll(rc)
+	buf, err := io.ReadAll(rc)
 	if err != nil {
 		return nil, err
 	}
@@ -215,7 +214,7 @@ func parseIpaFile(plistFile *zip.File) (*AppInfo, error) {
 	}
 	defer rc.Close()
 
-	buf, err := ioutil.ReadAll(rc)
+	buf, err := io.ReadAll(rc)
 	if err != nil {
 		return nil, err
 	}
@@ -309,7 +308,7 @@ func parseIpaProfile(porfileFile *zip.File) (*AppInfo, error) {
 }
 
 func loadPKCS7Content(r io.Reader) ([]byte, error) {
-	b, err := ioutil.ReadAll(r)
+	b, err := io.ReadAll(r)
 	if err != nil {
 		return nil, fmt.Errorf("failed to read pkcs7 data: %s", err)
 	}
